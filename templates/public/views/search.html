@@ -1,0 +1,47 @@
+{% extends '../layout/base.html' %}
+{% load static %}
+{% block titulo %}Busqueda{% endblock titulo %}
+
+{% block contenido %}
+<main>
+    {% if objects %}
+        <div class="container mt-4">
+            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+                {% for obj in objects %}
+                    <div class="col">
+                        <div class="card mb-3">
+                            <h3 class="card-header text-center">{{ obj.name }}</h3>
+                            {% if obj.image %}
+                                <img src="{{ obj.image.url }}" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                            {% elif obj.category == 'Chocolatería y Pastelería' %}
+                                <img src="{% static 'aromaysabor/img/cyp.png' %}?v={% now 'U' %}" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                            {% elif obj.category == 'Confitería y Café' %}
+                                <img src="{% static 'aromaysabor/img/cyc.png' %}?v={% now 'U' %}" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                            {% elif obj.category == 'Confitería y Pan Tradicional' %}
+                                <img src="{% static 'aromaysabor/img/cypt.png' %}?v={% now 'U' %}" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                            {% elif obj.category == 'Patisserie y Boulangerie' %}
+                                <img src="{% static 'aromaysabor/img/pyb.png' %}?v={% now 'U' %}" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                            {% endif %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Categoría: {{ obj.category }}</li>
+                                <li class="list-group-item">Tipo de local: {{ obj.local_type }}</li>
+                                <li class="list-group-item">Dirección: {{ obj.address }}</li>
+                                <li class="list-group-item">Barrio: {{ obj.neighborhood }}</li>
+                                <li class="list-group-item">Comuna: {{ obj.commune }}</li>
+                            </ul>
+                            <div class="card-footer text-muted text-center">
+                                <a href="{{ obj.maps }}" class="card-link" target="_blank">Ver ubicación</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-dismissible alert-danger container text-center mt-4">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <h3><strong>¡Ups! </strong>No se encontraron resultados.</h3>
+        </div>
+    {% endif %}
+</main>
+{% endblock contenido %}
